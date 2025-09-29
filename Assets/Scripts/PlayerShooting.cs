@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject projectilePrefab;     // Projectile Prefab
+    public GameObject projectilePrefab1;     // Projectile Prefab 1
+    public GameObject projectilePrefab2;     // Projectile Prefab 2
     public Transform firePoint;                     // 발사 위치 (총구)
     Camera cam;
+
+    public int projectileZ = 0;
 
     // Start
     void Start()
@@ -21,6 +24,18 @@ public class PlayerShooting : MonoBehaviour
         {
             Shoot();
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (projectileZ == 0)
+            {
+                projectileZ++;
+            }
+            else
+            {
+                projectileZ = 0;
+            }
+        }
     }
 
     void Shoot()
@@ -31,7 +46,15 @@ public class PlayerShooting : MonoBehaviour
         targetPoint = ray.GetPoint(50f);
         Vector3 direction = (targetPoint - firePoint.position).normalized;      // 방향 벡터
 
+
         // Projectile 생성
-        GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
+        if (projectileZ == 0)
+        {
+            GameObject proj = Instantiate(projectilePrefab1, firePoint.position, Quaternion.LookRotation(direction));
+        }
+        else
+        {
+            GameObject proj = Instantiate(projectilePrefab2, firePoint.position, Quaternion.LookRotation(direction));
+        }
     }
 }

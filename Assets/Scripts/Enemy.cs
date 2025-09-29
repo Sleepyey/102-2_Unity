@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public float hp = 5f;
     public float moveSpeed = 2f;        // 이동 속도
+
     private Transform player;           // 플레이어 추적용
 
     // Start
@@ -22,5 +24,14 @@ public class Enemy : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
         transform.LookAt(player.position);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

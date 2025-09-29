@@ -2894,9 +2894,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7685a997980427c41a01f5db12f513c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2757202553121462660, guid: 8423f53e4432db146825d6f593ebbbc3,
+  projectilePrefab1: {fileID: 2757202553121462660, guid: 8423f53e4432db146825d6f593ebbbc3,
+    type: 3}
+  projectilePrefab2: {fileID: 7585417500591243396, guid: 9283611774b448147a87226bb053ae04,
     type: 3}
   firePoint: {fileID: 667028695}
+  projectileZ: 0
 --- !u!1 &2001367415
 GameObject:
   m_ObjectHideFlags: 0

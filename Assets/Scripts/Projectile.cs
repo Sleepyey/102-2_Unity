@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public float damage = 1f;       // 대미지
     public float speed = 20f;       // 이동 시간
     public float lifeTime = 2f;     // 생존 시간 (초)
+
+    private Vector3 direction;
 
     // Start
     void Start()
@@ -25,8 +28,11 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            // 적 충돌 시 적 제거
-            Destroy(other.gameObject);
+            var enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
             // Projectile 제거
             Destroy(gameObject);
         }
