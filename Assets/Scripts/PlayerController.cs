@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public float jumpPower = 5f;
     public float gravity = -9.81f;
 
+    public int maxHP = 100;
+    private int currentHP;
+
     public CinemachineVirtualCamera virtualCam;
     public float rotationSpeed = 10f;
     private CinemachinePOV pov;
@@ -20,17 +24,29 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     public bool isGrounded;
 
+    public Slider hpSlider;
+
     // Start
     void Start()
     {
         controller = GetComponent<CharacterController>();
         pov = virtualCam.GetCinemachineComponent<CinemachinePOV>();
         // Virtual Camera의 POV 컴포넌트 가져오기
+
+        currentHP = maxHP;
+        hpSlider.value = 1f;
     }
 
     // Update
     void Update()
     {
+        // Tab을 누르면 마우스 포인트를 화면 중앙으로 이동
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            pov.m_HorizontalAxis.Value = transform.eulerAngles.y;
+            pov.m_VerticalAxis.Value = 0f;
+        }
+
         // 땅에 닿아 있는지 확인
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
@@ -87,5 +103,21 @@ public class PlayerController : MonoBehaviour
             speed = 5f;
             virtualCam.m_Lens.FieldOfView = fovD;
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage;
+        hpSlider.value = (float)currentHP / maxHP;
+
+        if (currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
